@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="flex-grow container mx-auto px-4 pt-8 pb-8 flex flex-col items-center">
+      <main className="flex-grow container mx-auto px-4 pt-12 pb-12 flex flex-col items-center">
         
         {/* Mascot and Nav Links */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-8 mb-12">
