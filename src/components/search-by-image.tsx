@@ -44,14 +44,14 @@ export function SearchByImage() {
 
 
   return (
-    <Card>
+    <Card className="flex flex-col h-full">
       <CardHeader>
         <CardTitle>Identify a Part from an Image</CardTitle>
         <CardDescription>
           Upload a clear photo of the part, and our AI will attempt to identify it for you.
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-6 flex flex-col flex-grow">
         <form action={formAction} className="space-y-4">
           <div
             className="w-full h-64 border-2 border-dashed border-border rounded-lg flex items-center justify-center relative bg-muted/50"

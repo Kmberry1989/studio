@@ -6,6 +6,7 @@ import type { CrossReferencePartNumbersOutput } from "@/ai/flows/cross-reference
 
 interface PartResultsPartNumberProps {
   result: CrossReferencePartNumbersOutput;
+  partNumber?: string;
 }
 
 const renderList = (title: string, items: string[]) => {
@@ -25,7 +26,7 @@ const renderList = (title: string, items: string[]) => {
     )
 }
 
-export function PartResultsPartNumber({ result }: PartResultsPartNumberProps) {
+export function PartResultsPartNumber({ result, partNumber }: PartResultsPartNumberProps) {
   const noResults = !result.compatibleParts.length && !result.equivalentParts.length && !result.alternativeVendors.length;
 
   return (
@@ -56,7 +57,7 @@ export function PartResultsPartNumber({ result }: PartResultsPartNumberProps) {
                             {result.alternativeVendors.map((vendor, index) => (
                                 <li key={index}>
                                     <a 
-                                        href={`https://www.google.com/search?q=${encodeURIComponent(vendor)}`}
+                                        href={`https://www.google.com/search?tbm=shop&q=${encodeURIComponent(`${partNumber} ${vendor}`)}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="flex items-center gap-2 text-primary hover:underline"

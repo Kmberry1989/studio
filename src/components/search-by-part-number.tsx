@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { Label } from "./ui/label";
 
-const initialState: PartNumberSearchState = { data: null, error: null };
+const initialState: PartNumberSearchState = { data: null, error: null, searchedPartNumber: "" };
 
 const categories = [
   { name: "Appliance", icon: Refrigerator },
@@ -25,14 +25,14 @@ export function SearchByPartNumber() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   return (
-    <Card>
+    <Card className="flex flex-col h-full">
       <CardHeader>
         <CardTitle>Cross-Reference a Part Number</CardTitle>
         <CardDescription>
           Enter a part number to find compatible or equivalent parts. Selecting a category can improve results.
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-6 flex flex-col flex-grow">
         <form action={formAction} className="space-y-4">
           <div>
             <Label htmlFor="partNumber">Part Number</Label>
@@ -74,7 +74,7 @@ export function SearchByPartNumber() {
             </Alert>
         )}
 
-        {state.data && <PartResultsPartNumber result={state.data} />}
+        {state.data && <PartResultsPartNumber result={state.data} partNumber={state.searchedPartNumber} />}
       </CardContent>
     </Card>
   );

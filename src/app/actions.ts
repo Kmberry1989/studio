@@ -70,14 +70,16 @@ const partNumberSearchSchema = z.object({
 export type PartNumberSearchState = {
   data: CrossReferencePartNumbersOutput | null;
   error: string | null;
+  searchedPartNumber?: string;
 };
 
 export async function crossReferenceAction(
   prevState: PartNumberSearchState,
   formData: FormData
 ): Promise<PartNumberSearchState> {
+  const partNumber = formData.get("partNumber") as string || "";
   const validatedFields = partNumberSearchSchema.safeParse({
-    partNumber: formData.get("partNumber"),
+    partNumber: partNumber,
     category: formData.get("category"),
   });
 
@@ -85,15 +87,16 @@ export async function crossReferenceAction(
     return {
       data: null,
       error: validatedFields.error.flatten().fieldErrors.partNumber?.[0] ?? "Invalid part number.",
+      searchedPartNumber: partNumber,
     };
   }
 
   try {
     const result = await crossReferencePartNumbers(validatedFields.data);
-    return { data: result, error: null };
+    return { data: result, error: null, searchedPartNumber: validatedFields.data.partNumber };
   } catch (e) {
     const error = e instanceof Error ? e.message : "An unknown error occurred.";
-    return { data: null, error: `AI cross-reference failed: ${error}` };
+    return { data: null, error: `AI cross-reference failed: ${error}`, searchedPartNumber: validatedFields.data.partNumber };
   }
 }
 
