@@ -1,25 +1,46 @@
+"use client";
+
+import { useState } from 'react';
 import { Header } from "@/components/layout/header";
 import { SearchByImage } from "@/components/search-by-image";
 import { SearchByPartNumber } from "@/components/search-by-part-number";
+import { ExpandedGarage } from "@/components/expanded-garage";
+import { ExpandedHouse } from "@/components/expanded-house";
 import Image from "next/image";
-import Link from 'next/link';
 import { Card } from '@/components/ui/card';
 import { Car, Home as HomeIcon } from 'lucide-react';
+import { useAuth } from '@/context/auth-context';
 
 export default function Home() {
-  return (
-    <div className="flex flex-col min-h-screen">
-      <Header />
-      <main className="flex-grow container mx-auto px-4 pt-12 pb-12 flex flex-col items-center">
-        
+  const { user, signInWithGoogle, loading } = useAuth();
+  const [expandedView, setExpandedView] = useState<'garage' | 'house' | null>(null);
+
+  const handleCardClick = (section: 'garage' | 'house') => {
+    if (user) {
+      setExpandedView(section);
+    } else if (!loading) {
+      signInWithGoogle();
+    }
+  };
+
+  const renderContent = () => {
+    if (expandedView === 'garage') {
+      return <ExpandedGarage onClose={() => setExpandedView(null)} />;
+    }
+    if (expandedView === 'house') {
+      return <ExpandedHouse onClose={() => setExpandedView(null)} />;
+    }
+    return (
+      <>
         {/* Mascot and Nav Links */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-8 mb-12">
-            <Link href="/garage">
-                <Card className="p-6 w-48 h-32 flex flex-col items-center justify-center text-center hover:bg-accent/50 transition-transform duration-300 hover:scale-105 cursor-pointer">
-                    <Car className="h-10 w-10 mb-2 text-primary"/>
-                    <p className="text-lg font-semibold">Garage</p>
-                </Card>
-            </Link>
+            <Card 
+                onClick={() => handleCardClick('garage')}
+                className="p-6 w-48 h-32 flex flex-col items-center justify-center text-center hover:bg-accent/50 transition-transform duration-300 hover:scale-105 cursor-pointer"
+            >
+                <Car className="h-10 w-10 mb-2 text-primary"/>
+                <p className="text-lg font-semibold">Garage</p>
+            </Card>
 
             <Image
               src="https://i.imgur.com/XWGTfkV.png"
@@ -30,12 +51,13 @@ export default function Home() {
               className="drop-shadow-2xl"
             />
             
-            <Link href="/house">
-                 <Card className="p-6 w-48 h-32 flex flex-col items-center justify-center text-center hover:bg-accent/50 transition-transform duration-300 hover:scale-105 cursor-pointer">
-                    <HomeIcon className="h-10 w-10 mb-2 text-primary"/>
-                    <p className="text-lg font-semibold">House</p>
-                </Card>
-            </Link>
+            <Card 
+                onClick={() => handleCardClick('house')}
+                className="p-6 w-48 h-32 flex flex-col items-center justify-center text-center hover:bg-accent/50 transition-transform duration-300 hover:scale-105 cursor-pointer"
+            >
+                <HomeIcon className="h-10 w-10 mb-2 text-primary"/>
+                <p className="text-lg font-semibold">House</p>
+            </Card>
         </div>
 
 
@@ -49,6 +71,15 @@ export default function Home() {
                 <SearchByPartNumber />
             </div>
         </div>
+      </>
+    );
+  };
+  
+  return (
+    <div className="flex flex-col min-h-screen">
+      <Header />
+      <main className="flex-grow container mx-auto px-4 pt-12 pb-12 flex flex-col items-center justify-center">
+        {renderContent()}
       </main>
     </div>
   );
