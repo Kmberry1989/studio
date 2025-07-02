@@ -11,12 +11,12 @@ export function Header() {
         </div>
         <div>
           <Image
-            src="https://placehold.co/50x50.png"
+            src="https://i.imgur.com/6DK6Ibu.png"
             alt="PartSnap Mascot"
             width={50}
             height={50}
-            className="rounded-full"
-            data-ai-hint="friendly robot"
+            className="rounded-full object-cover"
+            data-ai-hint="smiling man"
           />
         </div>
       </div>
