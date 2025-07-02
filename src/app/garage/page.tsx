@@ -4,7 +4,8 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/auth-context';
 import { Header } from '@/components/layout/header';
-import { Loader2, Car } from 'lucide-react';
+import { Car } from 'lucide-react';
+import { LoadingAnimation } from '@/components/loading-animation';
 
 function GarageContent() {
   const { user, loading } = useAuth();
@@ -20,7 +21,7 @@ function GarageContent() {
     return (
         <div className="flex-grow flex items-center justify-center">
             <div className="flex flex-col items-center gap-4">
-                <Loader2 className="h-12 w-12 animate-spin text-primary" />
+                <LoadingAnimation />
                 <p className="text-muted-foreground">Loading your garage...</p>
             </div>
         </div>

@@ -2,7 +2,7 @@
 
 import { useFormStatus } from "react-dom";
 import { Button, type ButtonProps } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
+import { Cog } from "lucide-react";
 
 interface SubmitButtonProps extends ButtonProps {
   loadingText?: string;
@@ -19,7 +19,7 @@ export function SubmitButton({
     <Button type="submit" disabled={pending} {...props}>
       {pending ? (
         <>
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          <Cog className="mr-2 h-4 w-4 animate-spin" />
           {loadingText}
         </>
       ) : (
