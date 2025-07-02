@@ -10,27 +10,9 @@ interface ExpandedHouseProps {
     onClose: () => void;
 }
 
-const mockHouseItems: InventoryItem[] = [
-    {
-        name: "Samsung Refrigerator",
-        category: "Kitchen Appliance",
-        imageUrl: "https://placehold.co/200x200.png",
-        parts: [{ name: "Water Filter", partNumber: "HAF-CIN/EXP" }],
-        manuals: [
-            { name: "User Manual", url: "#" },
-            { name: "Installation Guide", url: "#" }
-        ],
-    },
-    {
-        name: "Trane XR14 AC Unit",
-        category: "HVAC",
-        imageUrl: "https://placehold.co/200x200.png",
-        parts: [],
-        manuals: [],
-    }
-];
-
 export function ExpandedHouse({ onClose }: ExpandedHouseProps) {
+    const houseItems: InventoryItem[] = [];
+
     return (
         <Card className="w-full max-w-7xl animate-fade-in">
             <CardHeader>
@@ -64,7 +46,14 @@ export function ExpandedHouse({ onClose }: ExpandedHouseProps) {
                     
                     {/* Inventory List */}
                     <div className="flex-grow md:w-3/4 space-y-4">
-                        {mockHouseItems.map(item => <InventoryItemCard key={item.name} item={item} />)}
+                        {houseItems.length > 0 ? (
+                            houseItems.map(item => <InventoryItemCard key={item.name} item={item} />)
+                        ) : (
+                            <div className="flex flex-col items-center justify-center text-center p-8 border-2 border-dashed rounded-lg h-48 bg-muted/50">
+                                <p className="text-lg font-medium text-muted-foreground">Your house is empty.</p>
+                                <p className="text-sm text-muted-foreground">Click below to add your first appliance.</p>
+                            </div>
+                        )}
                         <Button variant="outline" className="w-full py-6 border-dashed">
                             <PlusCircle className="mr-2" />
                             Add Appliance

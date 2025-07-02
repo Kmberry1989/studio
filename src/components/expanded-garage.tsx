@@ -10,28 +10,9 @@ interface ExpandedGarageProps {
     onClose: () => void;
 }
 
-const mockGarageItems: InventoryItem[] = [
-    {
-        name: "2021 Ford F-150",
-        category: "Truck",
-        imageUrl: "https://placehold.co/200x200.png",
-        parts: [
-            { name: "Oil Filter", partNumber: "FL-500S" },
-            { name: "Brake Pads - Front", partNumber: "BR-1477-B" },
-        ],
-        manuals: [{ name: "Owner's Manual", url: "#" }],
-    },
-    {
-        name: "2019 Honda Civic",
-        category: "Sedan",
-        imageUrl: "https://placehold.co/200x200.png",
-        parts: [],
-        manuals: [],
-    }
-];
-
-
 export function ExpandedGarage({ onClose }: ExpandedGarageProps) {
+    const garageItems: InventoryItem[] = [];
+
     return (
         <Card className="w-full max-w-7xl animate-fade-in">
             <CardHeader>
@@ -65,7 +46,14 @@ export function ExpandedGarage({ onClose }: ExpandedGarageProps) {
                     
                     {/* Inventory List */}
                     <div className="flex-grow md:w-3/4 space-y-4">
-                        {mockGarageItems.map(item => <InventoryItemCard key={item.name} item={item} />)}
+                        {garageItems.length > 0 ? (
+                            garageItems.map(item => <InventoryItemCard key={item.name} item={item} />)
+                        ) : (
+                            <div className="flex flex-col items-center justify-center text-center p-8 border-2 border-dashed rounded-lg h-48 bg-muted/50">
+                                <p className="text-lg font-medium text-muted-foreground">Your garage is empty.</p>
+                                <p className="text-sm text-muted-foreground">Click below to add your first vehicle or piece of equipment.</p>
+                            </div>
+                        )}
                         <Button variant="outline" className="w-full py-6 border-dashed">
                              <PlusCircle className="mr-2" />
                             Add Vehicle or Equipment

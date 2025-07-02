@@ -80,7 +80,7 @@ export function AdvancedSearch() {
           <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
                   <Label htmlFor="query" className="font-semibold">Search Query</Label>
-                  <Input id="query" name="query" placeholder="e.g., Samsung refrigerator water filter" required />
+                  <Input id="query" name="query" placeholder="Don't know a part number? Describe it here." required />
               </div>
 
             {searchType === 'Parts' && (
