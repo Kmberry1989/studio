@@ -1,15 +1,15 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import type { FindPartsOutput } from "@/ai/flows/find-parts-flow";
 import { Badge } from "./ui/badge";
-import { Book, DollarSign, Link as LinkIcon, Tag, Truck, Wrench } from "lucide-react";
+import { Book, DollarSign, Link as LinkIcon, Tag, Truck, Wrench, Video, UserCheck } from "lucide-react";
 
 interface PartResultsAdvancedProps {
   result: FindPartsOutput;
 }
 
 export function PartResultsAdvanced({ result }: PartResultsAdvancedProps) {
-  const { parts, manuals } = result;
-  const hasResults = (parts && parts.length > 0) || (manuals && manuals.length > 0);
+  const { parts, manuals, videos, technicians } = result;
+  const hasResults = (parts && parts.length > 0) || (manuals && manuals.length > 0) || (videos && videos.length > 0) || (technicians && technicians.length > 0);
 
   if (!hasResults) {
     return (
@@ -86,6 +86,70 @@ export function PartResultsAdvanced({ result }: PartResultsAdvancedProps) {
                         <LinkIcon className="h-4 w-4" />
                         <span>View Manual</span>
                     </a>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {videos && videos.length > 0 && (
+        <div className="space-y-4">
+          <div className="flex items-center gap-2">
+            <Video className="h-6 w-6" />
+            <h3 className="text-2xl font-bold">DIY Video Results</h3>
+          </div>
+          <div className="grid md:grid-cols-2 gap-4">
+            {videos.map((video, index) => (
+              <Card key={index} className="flex flex-col">
+                <CardHeader>
+                  <CardTitle>{video.name}</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3 flex-grow">
+                  <p className="text-sm text-muted-foreground">{video.description}</p>
+                  <div className="flex items-center gap-2 text-sm">
+                      <span>Experience: </span>
+                      <Badge variant={
+                          video.experienceLevel === 'Beginner' ? 'secondary' :
+                          video.experienceLevel === 'Intermediate' ? 'outline' :
+                          video.experienceLevel === 'Advanced' ? 'default' :
+                          'destructive'
+                      }>{video.experienceLevel}</Badge>
+                  </div>
+                </CardContent>
+                <div className="p-6 pt-0 mt-auto">
+                    <a 
+                        href={video.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-sm text-primary hover:underline"
+                    >
+                        <LinkIcon className="h-4 w-4" />
+                        <span>Watch Video</span>
+                    </a>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {technicians && technicians.length > 0 && (
+        <div className="space-y-4">
+          <div className="flex items-center gap-2">
+            <UserCheck className="h-6 w-6" />
+            <h3 className="text-2xl font-bold">Technician Results</h3>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {technicians.map((tech, index) => (
+              <Card key={index}>
+                <CardHeader>
+                  <CardTitle>{tech.name}</CardTitle>
+                  <CardDescription>{tech.specialty}</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-3 text-sm">
+                   <p><span className="font-semibold">Location:</span> {tech.location}</p>
+                   <p><span className="font-semibold">Contact:</span> {tech.contact}</p>
                 </CardContent>
               </Card>
             ))}

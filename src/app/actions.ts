@@ -102,7 +102,7 @@ const findPartsSchema = z.object({
   category: z.string().optional(),
   brand: z.string().optional(),
   partType: z.enum(['OEM', 'Aftermarket', 'Any']).optional(),
-  isManualSearch: z.string().transform(val => val === 'true'),
+  searchTarget: z.enum(['Parts', 'Manuals', 'Videos', 'Technicians']),
   filters: z.string().optional().transform(val => val ? val.split(',') : []),
 });
 
@@ -121,7 +121,7 @@ export async function findPartsAction(
     category: formData.get("category"),
     brand: formData.get("brand"),
     partType: formData.get("partType"),
-    isManualSearch: formData.get("isManualSearch"),
+    searchTarget: formData.get("searchTarget"),
     filters: formData.get("filters"),
   }
   

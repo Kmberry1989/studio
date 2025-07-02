@@ -49,27 +49,39 @@ export function AdvancedSearch() {
       </CardHeader>
       <CardContent className="space-y-8">
         <form action={formAction} className="space-y-6">
+          <div className="space-y-2">
+            <Label htmlFor="searchType" className="font-semibold">I'm looking for...</Label>
+            <RadioGroup
+              defaultValue="Parts"
+              name="searchTarget"
+              className="flex flex-wrap gap-x-4 gap-y-2"
+              onValueChange={setSearchType}
+              value={searchType}
+            >
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="Parts" id="r-parts" />
+                <Label htmlFor="r-parts">Parts</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="Manuals" id="r-manuals" />
+                <Label htmlFor="r-manuals">Manuals</Label>
+              </div>
+               <div className="flex items-center space-x-2">
+                <RadioGroupItem value="Videos" id="r-videos" />
+                <Label htmlFor="r-videos">DIY Videos</Label>
+              </div>
+               <div className="flex items-center space-x-2">
+                <RadioGroupItem value="Technicians" id="r-technicians" />
+                <Label htmlFor="r-technicians">Technicians</Label>
+              </div>
+            </RadioGroup>
+          </div>
+          
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <Label htmlFor="searchType" className="font-semibold">I'm looking for...</Label>
-              <RadioGroup
-                defaultValue="Parts"
-                name="searchType"
-                className="flex gap-4"
-                onValueChange={setSearchType}
-                value={searchType}
-              >
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="Parts" id="r-parts" />
-                  <Label htmlFor="r-parts">Parts</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="Manuals" id="r-manuals" />
-                  <Label htmlFor="r-manuals">Manuals</Label>
-                </div>
-              </RadioGroup>
-              <input type="hidden" name="isManualSearch" value={String(searchType === 'Manuals')} />
-            </div>
+              <div className="space-y-2">
+                  <Label htmlFor="query" className="font-semibold">Search Query</Label>
+                  <Input id="query" name="query" placeholder="e.g., Samsung refrigerator water filter" required />
+              </div>
 
             {searchType === 'Parts' && (
               <div className="space-y-2">
@@ -88,11 +100,6 @@ export function AdvancedSearch() {
             )}
           </div>
           
-          <div className="space-y-2">
-              <Label htmlFor="query" className="font-semibold">Search Query</Label>
-              <Input id="query" name="query" placeholder="e.g., Samsung refrigerator water filter or Honda Civic alternator" required />
-          </div>
-
           <div className="grid md:grid-cols-2 gap-6">
             <div className="space-y-2">
                 <Label htmlFor="category" className="font-semibold">Category</Label>
