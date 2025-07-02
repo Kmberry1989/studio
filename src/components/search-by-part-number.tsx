@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useActionState } from "react";
+import { useState } from "react";
+import { useActionState } from "react";
 import { Refrigerator, AirVent, Car } from "lucide-react";
 import { crossReferenceAction, type PartNumberSearchState } from "@/app/actions";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -51,7 +52,7 @@ export function SearchByPartNumber() {
                     "p-4 border rounded-lg flex flex-col items-center justify-center gap-2 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring",
                     selectedCategory === category.name
                       ? "bg-primary text-primary-foreground border-primary"
-                      : "hover:bg-accent/50 bg-card"
+                      : "hover:bg-accent hover:text-accent-foreground bg-background"
                   )}
                 >
                   <category.icon className="h-8 w-8" />
