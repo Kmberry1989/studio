@@ -9,6 +9,7 @@ import {
   crossReferencePartNumbers,
   type CrossReferencePartNumbersOutput,
 } from "@/ai/flows/cross-reference-part-numbers";
+import { findParts, type FindPartsOutput } from "@/ai/flows/find-parts-flow";
 
 // Helper to convert file to data URI
 const fileToDataUri = async (file: File): Promise<string> => {
@@ -93,5 +94,61 @@ export async function crossReferenceAction(
   } catch (e) {
     const error = e instanceof Error ? e.message : "An unknown error occurred.";
     return { data: null, error: `AI cross-reference failed: ${error}` };
+  }
+}
+
+const findPartsSchema = z.object({
+  query: z.string().min(3, "Search query must be at least 3 characters."),
+  category: z.string().optional(),
+  brand: z.string().optional(),
+  partType: z.enum(['OEM', 'Aftermarket', 'Any']).optional(),
+  isManualSearch: z.string().transform(val => val === 'true'),
+  filters: z.string().optional().transform(val => val ? val.split(',') : []),
+});
+
+export type FindPartsState = {
+  data: FindPartsOutput | null;
+  error: string | null;
+};
+
+export async function findPartsAction(
+  prevState: FindPartsState,
+  formData: FormData
+): Promise<FindPartsState> {
+
+  const rawFormData = {
+    query: formData.get("query"),
+    category: formData.get("category"),
+    brand: formData.get("brand"),
+    partType: formData.get("partType"),
+    isManualSearch: formData.get("isManualSearch"),
+    filters: formData.get("filters"),
+  }
+  
+  const validatedFields = findPartsSchema.safeParse(rawFormData);
+  
+  if (!validatedFields.success) {
+    const fieldErrors = validatedFields.error.flatten().fieldErrors;
+    const errorMessage = Object.values(fieldErrors).flat()[0] ?? "Invalid search criteria.";
+    return {
+      data: null,
+      error: errorMessage,
+    };
+  }
+
+  try {
+    // We can't pass undefined to the flow, so we build the object carefully
+    const inputData = {
+      ...validatedFields.data,
+      category: validatedFields.data.category || undefined,
+      brand: validatedFields.data.brand || undefined,
+      partType: validatedFields.data.partType || undefined,
+      filters: validatedFields.data.filters?.length ? validatedFields.data.filters : undefined,
+    }
+    const result = await findParts(inputData);
+    return { data: result, error: null };
+  } catch (e) {
+    const error = e instanceof Error ? e.message : "An unknown error occurred.";
+    return { data: null, error: `AI search failed: ${error}` };
   }
 }
