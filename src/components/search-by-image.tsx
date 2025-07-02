@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { useFormState } from "react-dom";
+import { useState, useRef, useEffect, useActionState } from "react";
 import Image from "next/image";
 import { ImageUp, X } from "lucide-react";
 import { identifyPartAction, type ImageSearchState } from "@/app/actions";
@@ -14,7 +13,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 const initialState: ImageSearchState = { data: null, error: null };
 
 export function SearchByImage() {
-  const [state, formAction] = useFormState(identifyPartAction, initialState);
+  const [state, formAction] = useActionState(identifyPartAction, initialState);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 

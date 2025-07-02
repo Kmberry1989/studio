@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { useFormState } from "react-dom";
+import { useState, useActionState } from "react";
 import { Refrigerator, AirVent, Car } from "lucide-react";
 import { crossReferenceAction, type PartNumberSearchState } from "@/app/actions";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -21,7 +20,7 @@ const categories = [
 ];
 
 export function SearchByPartNumber() {
-  const [state, formAction] = useFormState(crossReferenceAction, initialState);
+  const [state, formAction] = useActionState(crossReferenceAction, initialState);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   return (
