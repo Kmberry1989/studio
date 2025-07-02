@@ -1,6 +1,6 @@
 "use client";
 
-import { Cog, Wrench, Screw } from 'lucide-react';
+import { Cog, Wrench, Nut } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export function LoadingAnimation({ className }: { className?: string }) {
@@ -33,7 +33,7 @@ export function LoadingAnimation({ className }: { className?: string }) {
         <Cog className="cog-3 absolute top-14 left-14 w-10 h-10 text-primary opacity-60" />
 
         <Wrench className="absolute top-1/2 left-1/2 -translate-x-12 -translate-y-4 w-8 h-8 text-foreground -rotate-45" />
-        <Screw className="absolute top-1/2 left-1/2 translate-x-4 -translate-y-10 w-6 h-6 text-foreground rotate-12" />
+        <Nut className="absolute top-1/2 left-1/2 translate-x-4 -translate-y-10 w-6 h-6 text-foreground rotate-12" />
         </div>
     </div>
   );
