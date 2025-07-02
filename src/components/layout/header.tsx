@@ -1,6 +1,6 @@
 "use client";
 
-import { Wrench, LogIn, LogOut, Car, Home, Search } from 'lucide-react';
+import { Wrench, LogIn, LogOut, Car, Home, Search, Zap } from 'lucide-react';
 import { useAuth } from '@/context/auth-context';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -18,9 +18,10 @@ export function Header() {
     <header className="bg-card border-b border-border shadow-md">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <Link href="/" className="flex items-center gap-3">
+          <Link href="/" className="flex items-center gap-2">
             <Wrench className="w-8 h-8 text-primary" />
             <h1 className="text-2xl font-bold tracking-tight text-foreground">PartSnap</h1>
+            <Zap className="w-6 h-6 text-primary" />
           </Link>
         </div>
         
