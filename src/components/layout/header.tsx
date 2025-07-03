@@ -1,10 +1,7 @@
 'use client';
 
-<<<<<<< HEAD
-import { Wrench, LogIn, LogOut, Car, Home, Search, Zap } from 'lucide-react';
-=======
 import Link from 'next/link';
->>>>>>> 8407e6eed39c1a4f6d09e31b5ecb6bd3747fbce5
+import { Wrench, LogIn, LogOut, Car, Home, Search, Zap } from 'lucide-react';
 import { useAuth } from '@/context/auth-context';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -18,26 +15,18 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 export function Header() {
-  const { user, signInWithGoogle, signOutUser } = useAuth();
+  const { user } = useAuth();
 
   return (
-<<<<<<< HEAD
     <header className="bg-card border-b border-border shadow-md">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Link href="/" className="flex items-center gap-2">
             <Wrench className="w-8 h-8 text-primary" />
-            <h1 className="text-2xl font-bold tracking-tight text-foreground">PartSnap</h1>
+            <h1 className="text-2xl font-bold tracking-tight text-foreground">
+              PartSnap
+            </h1>
             <Zap className="w-6 h-6 text-primary" />
-=======
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 items-center">
-        <div className="mr-4 hidden md:flex">
-          <Link href="/" className="mr-6 flex items-center space-x-2">
-            <span className="hidden font-bold sm:inline-block">
-              PartFinder AI
-            </span>
->>>>>>> 8407e6eed39c1a4f6d09e31b5ecb6bd3747fbce5
           </Link>
           <nav className="flex items-center space-x-6 text-sm font-medium">
             <Link
@@ -75,8 +64,9 @@ export function Header() {
                       alt={user.displayName ?? 'User'}
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
-                        target.onerror = null; 
-                        target.src="https://placehold.co/40x40/000000/FFFFFF?text=U";
+                        target.onerror = null;
+                        target.src =
+                          'https://placehold.co/40x40/000000/FFFFFF?text=U';
                       }}
                     />
                     <AvatarFallback>
@@ -97,13 +87,13 @@ export function Header() {
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={signOutUser}>
+                <DropdownMenuItem onClick={() => useAuth().logout?.()}>
                   Log out
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Button onClick={signInWithGoogle}>Login with Google</Button>
+            <Button onClick={() => useAuth().signInWithGoogle?.()}>Login with Google</Button>
           )}
         </div>
       </div>

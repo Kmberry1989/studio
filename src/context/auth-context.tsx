@@ -1,29 +1,26 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-<<<<<<< HEAD
-import { onAuthStateChanged, GoogleAuthProvider, signInWithRedirect, signOut, type User } from 'firebase/auth';
-import { auth, isFirebaseConfigured } from '@/lib/firebase';
+import { onAuthStateChanged, User, signInWithCustomToken, signInAnonymously, GoogleAuthProvider, signInWithRedirect, signOut } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Terminal } from 'lucide-react';
-=======
-import { onAuthStateChanged, User, signInWithCustomToken, signInAnonymously } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { LoadingAnimation } from '@/components/loading-animation';
 
 // These are global variables provided by the environment.
 declare const __initial_auth_token: string;
->>>>>>> 8407e6eed39c1a4f6d09e31b5ecb6bd3747fbce5
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
+  signInWithGoogle: () => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType>({
   user: null,
   loading: true,
+  signInWithGoogle: async () => {},
+  logout: async () => {},
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -32,9 +29,11 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
+
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     // This effect handles the initial authentication when the component mounts.
@@ -71,12 +70,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     return () => unsubscribe();
   }, []); // The empty dependency array ensures this effect runs only once.
 
-<<<<<<< HEAD
   const signInWithGoogle = async () => {
-    if (!isFirebaseConfigured || !auth) {
-        console.error("Firebase is not configured. Please update your .env file.");
-        return;
-    }
     const provider = new GoogleAuthProvider();
     try {
       await signInWithRedirect(auth, provider);
@@ -86,10 +80,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   const logout = async () => {
-    if (!isFirebaseConfigured || !auth) {
-        console.error("Firebase is not configured. Please update your .env file.");
-        return;
-    }
     try {
       await signOut(auth);
       router.push('/');
@@ -97,17 +87,17 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       console.error("Error signing out", error);
     }
   };
-=======
+
   // Display a loading animation while we wait for the initial auth state.
   if (loading) {
     return <LoadingAnimation />;
   }
->>>>>>> 8407e6eed39c1a4f6d09e31b5ecb6bd3747fbce5
 
   // Once loading is false, render the rest of the application.
   return (
-    <AuthContext.Provider value={{ user, loading }}>
+    <AuthContext.Provider value={{ user, loading, signInWithGoogle, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
+// ...existing code...
