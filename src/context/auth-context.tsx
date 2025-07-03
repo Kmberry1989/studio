@@ -1,9 +1,9 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { onAuthStateChanged, User, signInWithCustomToken, signInAnonymously, GoogleAuthProvider, signInWithRedirect, signOut } from 'firebase/auth';
+import { onAuthStateChanged, User, signInWithCustomToken, signInAnonymously, signInWithRedirect, signOut } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
-import { auth } from '@/lib/firebase';
+import { auth, googleProvider } from '@/lib/firebase';
 import { LoadingAnimation } from '@/components/loading-animation';
 
 // These are global variables provided by the environment.
@@ -71,9 +71,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }, []); // The empty dependency array ensures this effect runs only once.
 
   const signInWithGoogle = async () => {
-    const provider = new GoogleAuthProvider();
     try {
-      await signInWithRedirect(auth, provider);
+      await signInWithRedirect(auth, googleProvider);
     } catch (error) {
       console.error("Error signing in with Google", error);
     }
