@@ -33,30 +33,32 @@ export default function Home() {
     return (
       <>
         {/* Mascot and Nav Links */}
-        <div className="flex flex-col md:flex-row items-center justify-center gap-8 mb-12">
+        <div className="flex flex-row items-center justify-center gap-4 md:gap-8 mb-12">
             <Card 
                 onClick={() => handleCardClick('garage')}
-                className="p-6 w-48 h-32 flex flex-col items-center justify-center text-center hover:bg-accent/50 transition-transform duration-300 hover:scale-105 cursor-pointer"
+                className="p-4 w-32 h-28 md:p-6 md:w-48 md:h-32 flex flex-col items-center justify-center text-center hover:bg-accent/50 transition-transform duration-300 hover:scale-105 cursor-pointer"
             >
-                <Car className="h-10 w-10 mb-2 text-primary"/>
-                <p className="text-lg font-semibold">Garage</p>
+                <Car className="h-8 w-8 md:h-10 md:w-10 mb-2 text-primary"/>
+                <p className="text-base md:text-lg font-semibold">Garage</p>
             </Card>
 
-            <Image
-              src="https://i.imgur.com/XWGTfkV.png"
-              alt="PartSnap Mascot"
-              width={150}
-              height={240}
-              data-ai-hint="smiling man"
-              className="drop-shadow-2xl"
-            />
+            <div className="w-[100px] h-[160px] md:w-[150px] md:h-[240px] relative shrink-0">
+              <Image
+                src="https://i.imgur.com/XWGTfkV.png"
+                alt="PartSnap Mascot"
+                fill
+                sizes="(max-width: 768px) 100px, 150px"
+                className="drop-shadow-2xl object-contain"
+                data-ai-hint="smiling man"
+              />
+            </div>
             
             <Card 
                 onClick={() => handleCardClick('house')}
-                className="p-6 w-48 h-32 flex flex-col items-center justify-center text-center hover:bg-accent/50 transition-transform duration-300 hover:scale-105 cursor-pointer"
+                className="p-4 w-32 h-28 md:p-6 md:w-48 md:h-32 flex flex-col items-center justify-center text-center hover:bg-accent/50 transition-transform duration-300 hover:scale-105 cursor-pointer"
             >
-                <HomeIcon className="h-10 w-10 mb-2 text-primary"/>
-                <p className="text-lg font-semibold">House</p>
+                <HomeIcon className="h-8 w-8 md:h-10 md:w-10 mb-2 text-primary"/>
+                <p className="text-base md:text-lg font-semibold">House</p>
             </Card>
         </div>
 

@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Wrench, LogIn, LogOut, Car, Home, Search, Zap } from 'lucide-react';
+import { Wrench, LogOut, Search, Zap } from 'lucide-react';
 import { useAuth } from '@/context/auth-context';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -28,29 +28,15 @@ export function Header() {
             </h1>
             <Zap className="w-6 h-6 text-primary" />
           </Link>
-          <nav className="flex items-center space-x-6 text-sm font-medium">
-            <Link
-              href="/search"
-              className="transition-colors hover:text-foreground/80 text-foreground/60"
-            >
-              Search
-            </Link>
-            <Link
-              href="/garage"
-              className="transition-colors hover:text-foreground/80 text-foreground/60"
-            >
-              Garage
-            </Link>
-            <Link
-              href="/house"
-              className="transition-colors hover:text-foreground/80 text-foreground/60"
-            >
-              House
-            </Link>
-          </nav>
         </div>
-        <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
-          {/* We check if the user exists and is not anonymous before showing profile */}
+        <div className="flex flex-1 items-center justify-end space-x-2 md:space-x-4">
+          <Button asChild variant="outline">
+            <Link href="/search" className='flex items-center'>
+              <Search className="h-5 w-5" />
+              <span className='hidden sm:inline-block sm:ml-2'>Search</span>
+            </Link>
+          </Button>
+
           {user && !user.isAnonymous ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -88,6 +74,7 @@ export function Header() {
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => useAuth().logout?.()}>
+                  <LogOut className="mr-2 h-4 w-4" />
                   Log out
                 </DropdownMenuItem>
               </DropdownMenuContent>
